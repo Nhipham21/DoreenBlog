@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # My app
     'blog.apps.BlogConfig',
+    'user.apps.UserConfig',
 
     # framwork
     'crispy_forms',
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'blog_doreen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['blog/template'],
+        'DIRS': ['blog/template', 'user/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
