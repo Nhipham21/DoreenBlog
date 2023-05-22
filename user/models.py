@@ -7,8 +7,10 @@ from PIL import Image
 
 class Profile(models.Model):
     # when delete user profile also delete, but if delete profile dose not delete user
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, help_text=False)
+    image = models.ImageField(
+        default='default.png', upload_to='profile_pics')
 
     def __str__(self):
         return f'{self.user.username} Profile'
