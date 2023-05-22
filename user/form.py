@@ -13,14 +13,20 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
+    username = forms.CharField(required=False, label='User Name')
+    email = forms.EmailField(required=False)
 
     class Meta:
         model = User
         fields = ['username', 'email']
+        help_texts = {
+            'username': None,
+        }
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput, required=False)
+
     class Meta:
         model = Profile
         fields = ['image']
