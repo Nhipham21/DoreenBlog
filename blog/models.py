@@ -39,6 +39,9 @@ class Post(models.Model):
     image = models.ImageField(
         default='default.png', upload_to='post_pics')
 
+    class Meta:
+        ordering = ['-date_posted']
+
     def __str__(self):
         return self.title
 
