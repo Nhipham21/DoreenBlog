@@ -1,0 +1,50 @@
+{%extends "blog/base.html"%}
+
+{%block content%}
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ object.author }}</a>
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            <small class="text-muted">{{ object.sub_category.name }}</small>
+          </div>
+          <div>
+            <img width="600" height="300" src="{{ object.image.url }}">
+          </div>
+          <h2 class="article-title">{{ object.title }}</h2>
+          <p class="article-content">{{ object.content }}</p>
+        </div>
+    </article>
+    <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        <!-- comments -->
+        <h2>{{ post_comments.count }} comments</h2>
+
+        {% for comment in post_comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.name }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        <h3>Leave a comment</h3>
+        {%if user.is_authenticated%}
+          <form method="POST"  style="margin-top: 1.3em;">
+            {% csrf_token %}
+            {{ c_form }}
+            <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+          </form>
+        {%else%}
+          <h6>To leave a comment, please<a class="ml-2" href="{%url 'login'%}">Sign In</a></h6>
+        {%endif%}
+      </div>
+    </div>
+{%endblock content%}

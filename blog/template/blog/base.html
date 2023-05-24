@@ -14,7 +14,7 @@
     {% if title %}
         <title>Django Blog - {{title}}</title>
     {%else%}
-        <title>Django Blog</title>
+        <title>Django</title>
     {%endif%}
 </head>
 <body>
@@ -28,6 +28,9 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+              {% for category in categories %}
+                <a class="nav-item nav-link" href="{%url 'category-detail' category.id%}">{{category.name }}</a>
+              {% endfor %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
