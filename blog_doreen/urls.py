@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_view
 from django.urls import path, include
 from user import views as user_view
+from blog import views as blog_view
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,9 +26,14 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('register/', user_view.register, name='register'),
     path('profile/', user_view.profile, name='profile'),
+    path('profile/', user_view.profile, name='profile'),
     path('login/', auth_view.LoginView.as_view(template_name='user/login.html'), name='login'),
     path('logout/', auth_view.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
     path('admin/', admin.site.urls),
+    path('category/<int:id>/', blog_view.category_detail_page,
+         name='category-detail'),
+    path('category/sub-category/<int:id>/', blog_view.subcategory_detail_page,
+         name='subcategory-detail'),
 ]
 
 if settings.DEBUG:

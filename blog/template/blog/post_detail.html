@@ -6,6 +6,10 @@
           <div class="article-metadata">
             <a class="mr-2" href="#">{{ object.author }}</a>
             <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            <small class="text-muted">{{ object.sub_category.name }}</small>
+          </div>
+          <div>
+            <img width="600" height="300" src="{{ object.image.url }}">
           </div>
           <h2 class="article-title">{{ object.title }}</h2>
           <p class="article-content">{{ object.content }}</p>
