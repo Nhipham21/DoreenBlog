@@ -1,27 +1,32 @@
 {%extends "blog/base.html"%}
+{%load crispy_forms_tags%}
 
 {%block content%}
     <article class="media content-section">
-        <div class="media-body">
-          <div class="article-metadata">
-            <a class="mr-2" href="#">{{ object.author }}</a>
-            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-            <small class="text-muted">{{ object.sub_category.name }}</small>
-          </div>
-          <div>
-            <img width="600" height="300" src="{{ object.image.url }}">
-          </div>
-          <h2 class="article-title">{{ object.title }}</h2>
-          <p class="article-content">{{ object.content }}</p>
+      <div class="media-body">
+        <div class="article-metadata">
+          <!-- <a class="mr-2" href="#">{{ object.author }}</a>
+          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small> -->
+          <small class="text-center">{{ object.sub_category.name }}</small>
         </div>
+        <div class="article-title">
+          <img width="600" height="360" src="{{ object.image.url }}">
+        </div>
+        <h2 class="article-title mt-2 text-center">{{ object.title }}</h2>
+        <div class="article-about d-flex justify-content-center align-items-center mb-2">
+          <div class="article-about-author pr-3 text-muted">Written by: <span>{{ object.author }}</span></div>
+          <div class="article-about-date pl-3 text-muted">{{ object.date_posted|date:"F d, Y" }}</div>
+        </div>
+        <p class="article-content">{{ object.content }}</p>
+      </div>
     </article>
-    <div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card mb-4 mt-3 ">
       <div class="card-body">
         <!-- comments -->
-        <h2>{{ post_comments.count }} comments</h2>
+        <h6 class="mb-0">{{ post_comments.count }} comments</h5>
 
         {% for comment in post_comments %}
-        <div class="comments" style="padding: 10px;">
+        <div class="comments pt-2" style="padding: 10px;">
           <p class="font-weight-bold">
             {{ comment.name }}
             <span class=" text-muted font-weight-normal">
@@ -33,17 +38,16 @@
         {% endfor %}
       </div>
     </div>
-    <div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card mb-4 mt-3 ">
       <div class="card-body">
-        <h3>Leave a comment</h3>
         {%if user.is_authenticated%}
-          <form method="POST"  style="margin-top: 1.3em;">
+          <form method="POST">
             {% csrf_token %}
-            {{ c_form }}
-            <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+            {{ c_form | crispy }}
+            <button type="submit" class="btn btn-submit bg-primary text-light">Bình luận</button>
           </form>
         {%else%}
-          <h6>To leave a comment, please<a class="ml-2" href="{%url 'login'%}">Sign In</a></h6>
+          <h6 class="mb-0">Để bình luận, vui lòng<a class="login-text ml-2 text-primary" href="{%url 'login'%}">Đăng nhập</a></h6>
         {%endif%}
       </div>
     </div>

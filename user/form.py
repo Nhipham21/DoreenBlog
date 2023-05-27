@@ -34,7 +34,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    body = forms.CharField(widget=forms.Textarea())
+    body = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}), required=False, label='Để lại bình luận')
 
     class Meta:
         model = Comment
