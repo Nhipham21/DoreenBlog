@@ -1,0 +1,18 @@
+
+
+<div class="bg-primary content-title py-2 px-3 mb-4">
+    <p class="mb-0 text-light">BÀI ĐĂNG MỚI NHẤT</p>
+</div>
+<div class="content-inner row g-2">
+    {% for post in posts %}
+    <article class="col-6">
+        <div class="p-2 border bg-light">
+          <div class="article-metadata">
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+          </div>
+          <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+    {%endfor%}
+  </div>
