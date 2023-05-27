@@ -2,7 +2,6 @@
 
 {%block content%}
     <!-- {%include "blog/lastest_section.html"%} -->
-<!-- <h1>BLog Home</h1>
     {% for post in posts %}
     <article class="media content-section">
         <div class="media-body">
@@ -11,8 +10,8 @@
             <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
           </div>
           <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h2>
-          <p class="article-content">{{ post.content }}</p>
+          <!-- <p class="article-content">{{ post.content }}</p> -->
         </div>
       </article>
-    {%endfor%} -->
+    {%endfor%}
 {%endblock content%}
