@@ -1,17 +1,28 @@
 {%extends "blog/base.html"%}
 
 {%block content%}
-<h2>{{subcategory.name}} </h2>
+<div class="category-wrap ml-2">
+  <i class="fa-solid fa-arrow-right-long"></i>
+  <h3 class="d-inline-block">{{subcategory.name}} </h3>
+</div>
 {% for post in posts %}
-<article class="media content-section">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" href="#">{{ post.author }}</a>
-      <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-    </div>
-    <h3><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h3>
-    <img width="600" height="300" src="{{ post.image.url }}">
-  </div>
-</article>
-{%endfor%} 
+    <article class="mb-2">
+        <div class="p-2 border rounded bg-light">
+          <div class="article-item-content d-flex row">
+            <a href="{%url 'post-detail' post.id%}" class="article-item-img col-3">
+              <img src="{{ post.image.url }}">
+            </a>
+            <div class="col-9">
+              <div class="text-primary">
+                <i class="fa-solid fa-play"></i>
+                <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
+              </div>
+              <h6><a class="article-item-name" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h6>
+              <small class="text-muted">Written by: <span class="font-italic">{{ post.author }}</span></small>
+              <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
+          </div>
+        </div>
+      </article>
+    {%endfor%}
 {%endblock content%}
