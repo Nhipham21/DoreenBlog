@@ -4,15 +4,13 @@
 {%block content%}
     <article class="media content-section">
       <div class="media-body">
-        <div class="article-metadata">
-          <!-- <a class="mr-2" href="#">{{ object.author }}</a>
-          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small> -->
-          <small class="text-center">{{ object.sub_category.name }}</small>
+        <div class="text-center p-2 mb-2 border-bottom text-primary font-weight-bold font-italic">
+          {{ object.sub_category.name }}
         </div>
-        <div class="article-title">
-          <img width="600" height="360" src="{{ object.image.url }}">
+        <div>
+          <img class="rounded" width="600" height="360" src="{{ object.image.url }}">
         </div>
-        <h2 class="article-title mt-2 text-center">{{ object.title }}</h2>
+        <h2 class="article-item-name mt-2 text-center">{{ object.title }}</h2>
         <div class="article-about d-flex justify-content-center align-items-center mb-2">
           <div class="article-about-author pr-3 text-muted">Written by: <span>{{ object.author }}</span></div>
           <div class="article-about-date pl-3 text-muted">{{ object.date_posted|date:"F d, Y" }}</div>
@@ -20,14 +18,20 @@
         <p class="article-content">{{ object.content }}</p>
       </div>
     </article>
+    <div class="text-right">
+      <button class="btn btn-outline-dark" type="like" method="POST">
+        <i class="fa-solid fa-heart-circle-check"></i>
+        Thêm vào yêu thích
+      </button>
+    </div>
     <div class="card mb-4 mt-3 ">
       <div class="card-body">
         <!-- comments -->
         <h6 class="mb-0">{{ post_comments.count }} comments</h5>
 
         {% for comment in post_comments %}
-        <div class="comments pt-2" style="padding: 10px;">
-          <p class="font-weight-bold">
+        <div class="comments p-2 border-bottom">
+          <p class="font-weight-bold mb-1">
             {{ comment.name }}
             <span class=" text-muted font-weight-normal">
               {{ comment.created_on }}
@@ -44,7 +48,7 @@
           <form method="POST">
             {% csrf_token %}
             {{ c_form | crispy }}
-            <button type="submit" class="btn btn-submit bg-primary text-light">Bình luận</button>
+            <button type="submit" class="btn btn-outline-dark">Bình luận</button>
           </form>
         {%else%}
           <h6 class="mb-0">Để bình luận, vui lòng<a class="login-text ml-2 text-primary" href="{%url 'login'%}">Đăng nhập</a></h6>
