@@ -5,16 +5,16 @@
         <form method="POST">
             {%csrf_token%}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+                <legend class="border-bottom mb-4">ĐĂNG KÝ NGAY</legend>
                 {{form|crispy}}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit" method="POST">Sign Up</button>
+                <button class="btn btn-outline-dark" type="submit" method="POST">Đăng ký</button>
             </div>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Already have an account? <a class="ml-2" href="{%url 'login'%}">Sign In</a>
+                Đã có tài khoản? <a class="ml-2" href="{%url 'login'%}">Đăng nhập</a>
             </small>
 
         </div>

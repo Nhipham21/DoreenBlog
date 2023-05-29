@@ -3,15 +3,24 @@
 <div class="bg-primary content-title py-2 px-3 mb-4">
     <p class="mb-0 text-light">BÀI ĐĂNG MỚI NHẤT</p>
 </div>
-<div class="content-inner row g-2">
+<div class="content-inner row mx-0 lastest_section">
     {% for post in posts %}
-    <article class="col-6">
-        <div class="p-2 border bg-light">
-          <div class="article-metadata">
-            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+    <article class="mb-2">
+        <div class="p-2 border rounded bg-light">
+          <div class="article-item-content d-flex row">
+            <a href="{%url 'post-detail' post.id%}" class="article-item-img col-3">
+              <img src="{{ post.image.url }}">
+            </a>
+            <div class="col-9">
+              <div class="text-primary">
+                <i class="fa-solid fa-play"></i>
+                <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
+              </div>
+              <h6><a class="article-item-name" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h6>
+              <small class="text-muted">Written by: <span class="font-italic">{{ post.author }}</span></small>
+              <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
           </div>
-          <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-          <p class="article-content">{{ post.content }}</p>
         </div>
       </article>
     {%endfor%}
