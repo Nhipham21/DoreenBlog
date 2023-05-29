@@ -5,24 +5,31 @@
     <article class="media content-section">
       <div class="media-body">
         <div class="text-center p-2 mb-2 border-bottom text-primary font-weight-bold font-italic">
-          {{ object.sub_category.name }}
+          {{ post.sub_category.name }}
         </div>
         <div>
-          <img class="rounded" width="600" height="360" src="{{ object.image.url }}">
+          <img class="rounded" width="600" height="360" src="{{ post.image.url }}">
         </div>
-        <h2 class="article-item-name mt-2 text-center">{{ object.title }}</h2>
+        <h2 class="article-item-name mt-2 text-center">{{ post.title }}</h2>
         <div class="article-about d-flex justify-content-center align-items-center mb-2">
-          <div class="article-about-author pr-3 text-muted">Written by: <span>{{ object.author }}</span></div>
-          <div class="article-about-date pl-3 text-muted">{{ object.date_posted|date:"F d, Y" }}</div>
+          <div class="article-about-author pr-3 text-muted">Written by: <span>{{ post.author }}</span></div>
+          <div class="article-about-date pl-3 text-muted">{{ post.date_posted|date:"F d, Y" }}</div>
         </div>
-        <p class="article-content">{{ object.content }}</p>
+        <p class="article-content">{{ post.content }}</p>
       </div>
     </article>
     <div class="text-right">
-      <button class="btn btn-outline-dark" type="like" method="POST">
-        <i class="fa-solid fa-heart-circle-check"></i>
-        Thêm vào yêu thích
-      </button>
+      {%if is_favourite%}
+        <a href="{% url 'favourite-post' id=post.id %}" class="btn btn-outline-dark" type="like" method="POST">
+          <i class="fa-solid fa-heart-circle-check"></i>
+          Đã thêm vào yêu thích
+        </a>
+      {%else%}
+        <a href="{% url 'favourite-post' id=post.id %}" class="btn btn-outline-dark" type="like" method="POST">
+          <i class="fa-solid fa-heart-circle-check"></i>
+          Thêm vào yêu thích
+        </a>
+      {%endif%}
     </div>
     <div class="card mb-4 mt-3 ">
       <div class="card-body">

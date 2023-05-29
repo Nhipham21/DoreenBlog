@@ -32,6 +32,7 @@
               {% for category in categories %}
                 <a class="nav-item nav-link" href="{%url 'category-detail' category.id%}">{{category.name }}</a>
               {% endfor %}
+              <a class="nav-item nav-link" href="{% url 'home' %}">Về Doreen</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
@@ -142,6 +143,8 @@
             {%else%}
               {%include "blog/popular_section.html"%}
             {%endif%} 
+            <!-- add favourite section -->
+            {%block favourite%}{%endblock favourite%}
           </div>
         </div>
       </div>

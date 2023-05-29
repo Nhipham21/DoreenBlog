@@ -38,12 +38,18 @@ class Post(models.Model):
         SubCategories, on_delete=models.PROTECT, default='')
     image = models.ImageField(
         default='default.png', upload_to='post_pics')
+    popular = models.BooleanField(default=False)
+    favourite = models.ManyToManyField(
+        User, related_name='favourite', blank=True, default=None)
 
     class Meta:
         ordering = ['-date_posted']
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return f"/post/{self.id}/"
 
 
 class Comment(models.Model):

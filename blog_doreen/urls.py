@@ -22,14 +22,19 @@ from blog import views as blog_view
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('', include('blog.urls')),
     path('register/', user_view.register, name='register'),
     path('profile/', user_view.profile, name='profile'),
-    path('profile/', user_view.profile, name='profile'),
     path('login/', auth_view.LoginView.as_view(template_name='user/login.html'), name='login'),
     path('logout/', auth_view.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
     path('admin/', admin.site.urls),
+    path('post/<int:id>/', blog_view.PostDetailView, name='post-detail'),
+    path('fav/<int:id>/', blog_view.favourite_post,
+         name='favourite-post'),
+    path('profile/favourite', blog_view.list_favourite_posts,
+         name='list_favourite_posts'),
     path('category/<int:id>/', blog_view.category_detail_page,
          name='category-detail'),
     path('category/sub-category/<int:id>/', blog_view.subcategory_detail_page,

@@ -23,6 +23,7 @@ def register(request):
 
 @login_required
 def profile(request):
+    favourite_posts = request.user.favourite.all()
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(
@@ -39,6 +40,7 @@ def profile(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'favourite_posts': favourite_posts,
     }
     return render(request, 'user/profile.html', context)
