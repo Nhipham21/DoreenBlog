@@ -6,16 +6,17 @@
     </div>
     <div class="content-inner row popular_section">
         {% for post in posts %}
-        <article class="col-12">
-            <a href="{%url 'post-detail' post.id%}" class="article-item-img">
-                <img src="{{ post.image.url }}">
-            </a>
-            <div class="article-item-content">
-                <a href="{%url 'post-detail' post.id%}" class="article-item-name">{{ post.title }}</a>
-                <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-             
-        </article>
+            {%if forloop.counter < 3%}
+                <article class="col-12">
+                    <a href="{%url 'post-detail' post.id%}" class="article-item-img">
+                        <img src="{{ post.image.url }}">
+                    </a>
+                    <div class="article-item-content">
+                        <a href="{%url 'post-detail' post.id%}" class="article-item-name">{{ post.title }}</a>
+                        <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
+                    </div>                
+                </article>
+            {%endif%}
         {%endfor%}
     </div>
 </div>
