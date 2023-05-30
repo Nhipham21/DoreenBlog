@@ -5,23 +5,25 @@
 </div>
 <div class="content-inner row mx-0 lastest_section">
     {% for post in posts %}
-    <article class="mb-2">
-        <div class="p-2 border rounded bg-light">
-          <div class="article-item-content d-flex row">
-            <a href="{%url 'post-detail' post.id%}" class="article-item-img col-3">
-              <img src="{{ post.image.url }}">
-            </a>
-            <div class="col-9">
-              <div class="text-primary">
-                <i class="fa-solid fa-play"></i>
-                <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
+      {%if forloop.counter < 6%}
+        <article class="mb-2">
+          <div class="p-2 border rounded bg-light">
+            <div class="article-item-content d-flex row">
+              <a href="{%url 'post-detail' post.id%}" class="article-item-img col-3">
+                <img src="{{ post.image.url }}">
+              </a>
+              <div class="col-9">
+                <div class="text-primary">
+                  <i class="fa-solid fa-play"></i>
+                  <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
+                </div>
+                <h6><a class="article-item-name" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h6>
+                <small class="text-muted">Written by: <span class="font-italic">{{ post.author }}</span></small>
+                <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
               </div>
-              <h6><a class="article-item-name" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h6>
-              <small class="text-muted">Written by: <span class="font-italic">{{ post.author }}</span></small>
-              <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      {%endif%}
     {%endfor%}
   </div>

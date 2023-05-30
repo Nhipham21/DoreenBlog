@@ -5,20 +5,22 @@
         </div>
         <div class="content-inner row popular_section">
             {% for post in posts %}
-            <article class="col-12">
-                <a href="{%url 'post-detail' post.id%}" class="article-item-img">
-                    <img src="{{ post.image.url }}">
-                </a>
-                <div class="article-item-content">
-                    <div class="ml-1 text-primary">
-                        <i class="fa-solid fa-play"></i>
-                        <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
-                    </div>
-                    <a href="{%url 'post-detail' post.id%}" class="article-item-name">{{ post.title }}</a>
-                    <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
-                </div>
-                 
-            </article>
+                {%if post.popular%}
+                    <article class="col-12">
+                        <a href="{%url 'post-detail' post.id%}" class="article-item-img">
+                            <img src="{{ post.image.url }}">
+                        </a>
+                        <div class="article-item-content">
+                            <div class="ml-1 text-primary">
+                                <i class="fa-solid fa-play"></i>
+                                <small class="d-inline-block font-italic">{{ post.sub_category.name }}</small>
+                            </div>
+                            <a href="{%url 'post-detail' post.id%}" class="article-item-name">{{ post.title }}</a>
+                            <small class="text-muted d-block">{{ post.date_posted|date:"F d, Y" }}</small>
+                        </div>
+                     
+                    </article>
+                {%endif%}
             {%endfor%}
         </div>
     </div>

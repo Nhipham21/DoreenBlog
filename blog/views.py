@@ -1,11 +1,13 @@
 from typing import Any, Dict
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import ListView, DetailView
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 from .models import Post, Comment, Categories, SubCategories
+from django.contrib.auth.models import User
 from user.form import CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -45,35 +47,88 @@ class PostListView(ListView):
     template_name = 'blog/homepage.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
-    paginate_by = 5
+    # paginate_by = 5
 
 
-class PostDetailView(DetailView):
-    model = Post
+@login_required
+def favourite_post(request, id):
+    post = get_object_or_404(Post, id=id)
+    if post.favourite.filter(id=request.user.id).exists():
+        post.favourite.remove(request.user)
+    else:
+        post.favourite.add(request.user)
 
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def list_favourite_posts(request):
+    user = request.user
+    favourite_posts = user.favourite.all()
+
+    context = {
+        'favourite_posts': favourite_posts,
+    }
+
+    return render(request, 'blog/list_favourite_posts.html', context)
+
+
+def PostDetailView(request, id):
+    post = Post.objects.get(id=id)
+    post_comments = Comment.objects.all().filter(post=post.id)
     c_form = CommentForm
+    is_favourite = False
+    if post.favourite.filter(id=request.user.id).exists():
+        is_favourite = True
 
     # save comment when user submit
-    def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            c_form = CommentForm(request.POST)
-            if c_form.is_valid():
-                post = self.get_object()
-                c_form.instance.name = request.user
-                c_form.instance.post = post
-                c_form.save()
-                messages.success(
-                    request, f'You have commented in this post!')
-                return redirect(reverse('post-detail', args=[str(post.pk)]))
+    if request.method == 'POST':
+        c_form = CommentForm(request.POST)
+        if c_form.is_valid():
+            c_form.instance.name = request.user
+            c_form.instance.post = post
+            c_form.save()
+            messages.success(
+                request, f'Bạn đã bình luận thành công tại bài post này!')
+            return redirect(reverse('post-detail', args=[str(post.id)]))
         else:
             c_form = CommentForm()
 
-    # get previous comments
-    def get_context_data(self, **kwargs: Any):
-        post_comments = Comment.objects.all().filter(post=self.object.id)
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'c_form': self.c_form,
-            'post_comments': post_comments
-        })
-        return context
+    context = {
+        'post': post,
+        'post_comments': post_comments,
+        'c_form': c_form,
+        'is_favourite': is_favourite,
+    }
+    return render(request, 'blog/post_detail.html', context)
+
+
+# class PostDetailView(DetailView):
+#     model = Post
+
+    # c_form = CommentForm
+
+    # # save comment when user submit
+
+    # def post(self, request, *args, **kwargs):
+    #     if request.method == 'POST':
+    #         c_form = CommentForm(request.POST)
+    #         if c_form.is_valid():
+    #             post = self.get_object()
+    #             c_form.instance.name = request.user
+    #             c_form.instance.post = post
+    #             c_form.save()
+    #             messages.success(
+    #                 request, f'You have commented in this post!')
+    #             return redirect(reverse('post-detail', args=[str(post.pk)]))
+    #     else:
+    #         c_form = CommentForm()
+
+#     # get previous comments
+#     def get_context_data(self, **kwargs: Any):
+#         post_comments = Comment.objects.all().filter(post=self.object.id)
+#         context = super().get_context_data(**kwargs)
+#         context.update({
+#             'c_form': self.c_form,
+#             'post_comments': post_comments
+#         })
+#         return context
